@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CESPT - Iniciar Sesión</title>
+
+    <!-- Fuente moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Fondo mitad azul — mitad blanco */
+       body {
+    background: linear-gradient(to bottom, #143365 50%, #ffffff 50%);
+    min-height: 100vh;
+    color: #333;
+}
+
+
+        /* Barra superior igual a la azul */
+        .arribita {
+            width: 100%;
+            background: #143365;
+            padding: 28px 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            border-bottom: 4px solid #0e2449;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+            letter-spacing: 0.4px;
+        }
+
+        /* Contenedor centrado */
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        /* Tarjeta EXACTAMENTE como tu diseño azul original */
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.20);
+            animation: fadeIn 0.5s ease;
+            color: #000;
+        }
+
+         .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 34px;
+            font-weight: 700;
+            color: #143365;
+        }
+
+        .logo p {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #143365;
+            font-size: 22px;
+        }
+                .form-group {
+            margin-bottom: 18px;
+        }
+    
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #143365;
+            font-size: 22px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+            color: #0e2449;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        input:hover {
+            border-color: #143365;
+        }
+
+        input:focus {
+            border-color: #0e2449;
+            outline: none;
+            box-shadow: 0 0 5px rgba(20, 51, 101, 0.6);
+            transform: scale(1.01);
+        }
+
+        /* Botón */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #143365;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn-login:hover {
+            background: #0e2449;
+            transform: scale(1.02);
+        }
+
+                .info-box {
+            background: #fafafa;
+            border-left: 4px solid #143365;
+            padding: 12px 15px;
+            margin-top: 25px;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #143365;
+        }
+
+        .info-box ul {
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+
+        footer {
+            background:white;
+            color:black;
+            text-align:center;
+            padding:20px 10px;
+            margin-top:40px;
+            font-size:14px;
+            border-top:4px solid #143365;
+            border-bottom:4px solid #143365;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo img {
+            max-width: 280px;     /* Tamaño máximo del logo */
+            width: 100%;          /* Adaptable a móvil */
+            height: auto;
+            display: block;
+            margin: 0 auto;       /* Centrado */
+        }
+
+/* Ajuste especial para pantallas pequeñas */
+       @media (max-width: 480px) {
+    .logo img {
+        max-width: 250px;   /* Aumentado */
+    }
+
+    .login-card {
+        padding: 28px;
+    }
+
+    .logo p {
+        font-size: 13px;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+
+
+ 
+    <div class="container">
+        <div class="login-card">
+
+            <div class="logo">
+               <img src=https://i.postimg.cc/BbVVg5N0/Screenshot-125.png" alt="Mi imagen">
+                <p>Centro de Quejas del Instituto Tecnológico de Tijuana.</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <h2>Identificación</h2>
+
+                <div class="form-group">
+                    <label for="numero_servicio">Número de control *</label>
+                    <input 
+                        type="text"
+                        id="numero_servicio"
+                        name="numero_servicio"
+                        placeholder="8-10 dígitos"
+                        required
+                        pattern="[0-9]{8,10}"
+                    >
+                    <small>Encuéntralo en tu credencial</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Contraseña *</label>
+                    <input 
+                        type="text"
+                        id="telefono"
+                        name="telefono"
+                        placeholder="18 dígitos"
+                        required
+                        pattern="[A-Z0-9]{18}"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo institucional (opcional)</label>
+                    <input 
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="usuario@ejemplo.com"
+                    >
+                </div>
+
+
+                <button type="submit" class="btn-login">Ingresar al Sistema</button>
+
+                <!-- Estado de seguridad -->
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
+                    margin-top:15px;
+                    font-size:13px;
+                    color:#555;
+                ">
+                    <span style="width:10px;height:10px;background:#1ec31e;border-radius:50%;"></span>
+                    Conexión segura — Datos cifrados
+                </div>
+
+                <div class="info-box">
+                    <h3>Información importante:</h3>
+                    <ul>
+                        <li>Los campos con * son obligatorios</li>
+                        <li>Se generará un folio automáticamente</li>
+                        <li>Puede reportar fugas, falta de agua, etc.</li>
+                    </ul>
+                </div>
+
+
+                <p style="text-align:center;margin-top:15px;font-size:12px;color:#777;">
+                    Última actualización del sistema: Noviembre 2025
+                </p>
+
+            </form>
+
+        </div>
+    </div>
+
+    <footer>
+        <strong>Importante: </strong> Para ingresar al sistema se recomienda usar el navegador de Google Chrome, en caso de que marque error de autenticación es necesario ingresar en el mismo navegador pero en modo incógnito. — <br>
+        © 2025 ITT
+    </footer>
+
+  <script src="Script.js"></script>
+
+</body>
+</html>
+
