@@ -1226,25 +1226,6 @@
     transform: rotate(180deg);
 }
 
-/* Indicador de campus activo */
-.campus-indicator {
-    position: fixed;
-    top: 100px;
-    left: 20px;
-    background: rgba(124, 0, 42, 0.9);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    z-index: 999;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    display: none;
-    align-items: center;
-    gap: 8px;
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .campus-panel {
@@ -1276,10 +1257,7 @@
         font-size: 18px;
     }
     
-    /* En móvil, mostrar indicador cuando el panel está cerrado */
-    .campus-panel.collapsed + .campus-indicator {
-        display: flex;
-    }
+    
 }
 
 @media (max-width: 480px) {
@@ -1348,11 +1326,6 @@
             <button onclick="cambiarCampus('otay')" id="btnOtay" class="campus-btn">📍 Campus Otay</button>
         </div>
     </div>
-</div>
-<!-- Indicador de campus activo (solo visible en móvil cuando el panel está cerrado) -->
-<div class="campus-indicator" id="campusIndicator">
-    <i class="fas fa-map-marker-alt"></i>
-    <span id="campusName">Campus Tomás Aquino</span>
 </div>
 
   <div class="welcome-section">
