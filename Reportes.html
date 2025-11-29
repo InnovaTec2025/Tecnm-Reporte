@@ -1766,15 +1766,15 @@
   <script>
     /* ===== CONFIGURACIÓN FIREBASE ===== */
     const firebaseConfig = {
-      apiKey: "AIzaSyBKBEacMSzpEjh2Pd2zX-ij6EsDMxcb84M",
-      authDomain: "mapa-de-quejas-e5354.firebaseapp.com",
-      databaseURL: "https://mapa-de-quejas-e5354-default-rtdb.firebaseio.com",
-      projectId: "mapa-de-quejas-e5354",
-      storageBucket: "mapa-de-quejas-e5354.appspot.com",
-      messagingSenderId: "1098104212670",
-      appId: "1:1098104212670:web:fa91e20fb729dcd8be22ef",
-      measurementId: "G-XJ015E8YWX"
-    };
+  apiKey: "AIzaSyDtIdmk_-VeFycR2KvN3sNcJ5DUQ9s0Zlw",
+  authDomain: "tecnm-reportes.firebaseapp.com",
+  databaseURL: "https://tecnm-reportes-default-rtdb.firebaseio.com",
+  projectId: "tecnm-reportes",
+  storageBucket: "tecnm-reportes.firebasestorage.app",
+  messagingSenderId: "553195963566",
+  appId: "1:553195963566:web:65555c9f6b6005b60ad93f",
+  measurementId: "G-LNTG9DGCQ1"
+};
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -1822,13 +1822,27 @@ function cambiarCampus(campus) {
     // Actualizar mapa si existe
     if (mapa) {
         const config = campusConfig[campus];
-        mapa.setView(config.center, 17);
-        mapa.setMaxBounds(config.bounds);
+        
+        // Configurar límites estrictos del campus
+        const bounds = L.latLngBounds(config.bounds);
+        
+        // Establecer límites máximos y nivel de zoom fijo
+        mapa.setMaxBounds(bounds);
+        mapa.setView(config.center, 17); // Zoom fijo en nivel 17
+        
+        // Deshabilitar zoom adicional
+        mapa.options.maxZoom = 17;
+        mapa.options.minZoom = 17;
         
         // Efecto visual suave
         mapa.flyTo(config.center, 17, {
             duration: 1,
             easeLinearity: 0.25
+        });
+        
+        // Forzar a mantenerse dentro de los límites
+        mapa.on('drag', function() {
+            mapa.panInsideBounds(bounds, { animate: false });
         });
     }
 }
@@ -1891,34 +1905,65 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // Y AQUÍ AGREGA EL CÓDIGO DEL PANEL DE CAMPUS:
-  const togglePanel = document.getElementById('togglePanel');
-  const campusPanel = document.getElementById('campusPanel');
-  const campusIndicator = document.getElementById('campusIndicator');
-  
-  if (togglePanel && campusPanel) {
-      togglePanel.addEventListener('click', function() {
-          campusPanel.classList.toggle('collapsed');
-          
-          // En móvil, mostrar/ocultar indicador
-          if (window.innerWidth <= 768) {
-              if (campusPanel.classList.contains('collapsed')) {
-                  campusIndicator.style.display = 'flex';
-              } else {
-                  campusIndicator.style.display = 'none';
-              }
-          }
-      });
-      
-      // Cerrar panel al hacer clic fuera (solo en móvil)
-      if (window.innerWidth <= 768) {
-          document.addEventListener('click', function(e) {
-              if (!campusPanel.contains(e.target) && !togglePanel.contains(e.target) && !campusPanel.classList.contains('collapsed')) {
-                  campusPanel.classList.add('collapsed');
-                  campusIndicator.style.display = 'flex';
-              }
-          });
-      }
-  }
+ const togglePanel = document.getElementById('togglePanel');
+    const campusPanel = document.getElementById('campusPanel');
+    const campusIndicator = document.getElementById('campusIndicator');
+    
+    if (togglePanel && campusPanel) {
+        // Función para alternar el panel
+        function togglePanelState() {
+            const isCollapsed = campusPanel.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                // Abrir panel
+                campusPanel.classList.remove('collapsed');
+                if (window.innerWidth <= 768) {
+                    campusIndicator.style.display = 'none';
+                }
+            } else {
+                // Cerrar panel
+                campusPanel.classList.add('collapsed');
+                if (window.innerWidth <= 768) {
+                    campusIndicator.style.display = 'flex';
+                }
+            }
+        }
+        
+        // Event listener mejorado para el botón toggle
+        togglePanel.addEventListener('click', function(e) {
+            e.stopPropagation(); // Evita que el click se propague
+            togglePanelState();
+        });
+        
+        // Cerrar panel al hacer clic fuera (solo en móvil)
+        if (window.innerWidth <= 768) {
+            document.addEventListener('click', function(e) {
+                if (!campusPanel.contains(e.target) && 
+                    !togglePanel.contains(e.target) && 
+                    !campusPanel.classList.contains('collapsed')) {
+                    campusPanel.classList.add('collapsed');
+                    campusIndicator.style.display = 'flex';
+                }
+            });
+        }
+        
+        // Prevenir que los clicks dentro del panel cierren el panel
+        campusPanel.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Mejorar la transición CSS (esto va en el estilo)
+        const style = document.createElement('style');
+        style.textContent = `
+            .campus-panel {
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            }
+            .toggle-panel {
+                transition: all 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 });
 
 
@@ -3464,19 +3509,33 @@ function cargarHistorialActualizaciones(reporteId) {
      * SALIDA: Ninguna
      */
     function initMap(){
-      mapa = L.map('map');
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    mapa = L.map('map', {
+        // DESHABILITAR ZOOM Y ESTABLECER ZOOM FIJO
+        zoomControl: false,  // Oculta los controles de zoom
+        scrollWheelZoom: false,  // Deshabilita zoom con rueda del mouse
+        doubleClickZoom: false,  // Deshabilita zoom con doble click
+        boxZoom: false,  // Deshabilita zoom con shift + arrastre
+        keyboard: false,  // Deshabilita zoom con teclado (+/-)
+        dragging: true,  // Permite arrastrar pero no zoom
+        maxZoom: 17,  // Zoom máximo
+        minZoom: 17   // Zoom mínimo (igual al máximo = zoom fijo)
+    });
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(mapa);
 
-      fetch("https://nominatim.openstreetmap.org/search?city=Tijuana&format=json")
-        .then(r => r.json())
-        .then(data => {
-          if (data.length > 0) mapa.setView([parseFloat(data[0].lat), parseFloat(data[0].lon)], 12);
-          else mapa.setView([32.533, -117.033], 12);
-        })
-        .catch(()=> mapa.setView([32.533, -117.033], 12));
-
+    // CENTRAR DIRECTAMENTE EN TOMÁS AQUINO AL INICIAR
+    const configInicial = campusConfig[campusActual];
+    const boundsInicial = L.latLngBounds(configInicial.bounds);
+    
+    mapa.setView(configInicial.center, 17);
+    mapa.setMaxBounds(boundsInicial);
+    
+    // Forzar a mantenerse dentro de los límites
+    mapa.on('drag', function() {
+        mapa.panInsideBounds(boundsInicial, { animate: false });
+    });
       /**
        * FUNCIÓN: addMarker
        * PROPÓSITO: Agregar marcador al mapa con toda la información
